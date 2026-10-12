@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy 1 Year Friendship!</title>
+    <title>Happy 1 Year Anniversary!</title>
     <!-- PyScript Core -->
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -15,23 +16,37 @@
         }
         body { 
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; 
-            background: linear-gradient(135deg, #fce4ec 0%, #ffe0b2 50%, #e1bee7 100%);
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
         }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .card { 
-            background: rgba(255, 255, 255, 0.95); 
+            background: rgba(255, 255, 255, 0.92); 
+            backdrop-filter: blur(10px);
             padding: 32px 24px; 
             border-radius: 24px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             max-width: 450px;
             width: 100%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            z-index: 10;
         }
+
         .badge { 
             background: linear-gradient(45deg, #ff70a6, #ff9770); 
             color: white; 
@@ -42,37 +57,68 @@
             letter-spacing: 0.5px;
             display: inline-block;
             margin-bottom: 16px;
+            box-shadow: 0 4px 10px rgba(255, 112, 166, 0.3);
         }
+
         h1 { 
             color: #2b2d42; 
             font-size: 24px; 
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
+
         .sub-header {
-            color: #707793;
+            color: #6c757d;
             font-size: 14px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
+
         #greeting-output { 
             font-size: 15px; 
-            color: #333; 
+            color: #2b2d42; 
             line-height: 1.7;
             text-align: left;
-            background: #fff8f9;
+            background: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 16px;
             border-left: 4px solid #ff70a6;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            min-height: 120px;
         }
+
         .loader {
             text-align: center;
             color: #888;
             font-style: italic;
         }
-        .footer {
+
+        .p-msg {
+            margin-bottom: 12px;
+        }
+
+        .heart-btn {
             margin-top: 20px;
+            background: linear-gradient(45deg, #ff4b1f, #ff9068);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(255, 75, 31, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .heart-btn:active {
+            transform: scale(0.95);
+        }
+
+        .footer {
+            margin-top: 16px;
             font-size: 12px;
-            color: #a0a5b5;
+            color: #8d99ae;
         }
     </style>
 </head>
@@ -86,16 +132,18 @@
             <p class="loader">Compiling a special Python message for you...</p>
         </div>
 
+        <button class="heart-btn" onclick="triggerConfetti()">Celebrate 💖</button>
+
         <div class="footer">
-            Built with ❤️ & Python logic
+            Built with ❤️ from your Friend ❤️
         </div>
     </div>
 
     <py-script>
         from datetime import datetime
-        from js import document
+        from js import document, setTimeout, confetti
+        import pyodide
 
-        # Personal message elements
         title = "To someone special,"
         
         paragraphs = [
@@ -104,13 +152,26 @@
             "Thank you for understanding where we both stand and for growing alongside me while we focus on our own paths for now. I truly appreciate you and everything we share. Here's to us, our dreams, and many more milestones ahead!"
         ]
 
-        # Formatting as HTML
-        html_content = f"<b>{title}</b><br><br>"
+        # Combine text for output
+        full_html = f"<b>{title}</b><br><br>"
         for p in paragraphs:
-            html_content += f"<p style='margin-bottom: 12px;'>{p}</p>"
-        
-        # Render into document
-        document.getElementById("greeting-output").innerHTML = html_content
+            full_html += f"<p class='p-msg'>{p}</p>"
+
+        # Update the webpage
+        document.getElementById("greeting-output").innerHTML = full_html
+
+        # Trigger automatic confetti on load
+        confetti()
     </py-script>
+
+    <script>
+        function triggerConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    </script>
 </body>
 </html>
