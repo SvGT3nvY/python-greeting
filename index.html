@@ -86,13 +86,12 @@
         </div>
 
         <button class="btn" onclick="fireConfetti()">Celebrate Our Milestone 💖</button>
-        <div class="footer">Powered by Python & GitHub Pages</div>
+        <div class="footer">Build with love from your friend 💖</div>
     </div>
 
     <py-script>
         from js import document, confetti
 
-        # Personalized message elements
         greeting_title = "To my wonderful friend,"
         
         p1 = "Happy 1st Anniversary to our friendship! It's incredible how a whole year has flown by since we started talking. Even though we haven't met in person yet, you've brought so much warmth and happiness into my days."
@@ -101,11 +100,11 @@
         
         p3 = "Thank you for understanding where we both stand, keeping our focus on our studies for now, and growing alongside me. I truly appreciate you. Here's to us, our dreams, and many more milestones ahead!"
 
-        # Constructing HTML safely without complex f-string quote nesting
-        html = "<b>" + greeting_title + "</b><br><br>"
-        html += "<p class='msg-p'>" + p1 + "</p>"
-        html += "<p class='msg-p'>" + p2 + "</p>"
-        html += "<p class='msg-p'>" + p3 + "</p>"
+        # Fixed quote syntax using single quotes outside and double quotes inside
+        html = f"<b>{greeting_title}</b><br><br>"
+        html += f'<p class="msg-p">{p1}</p>'
+        html += f'<p class="msg-p">{p2}</p>'
+        html += f'<p class="msg-p">{p3}</p>'
 
         document.getElementById("greeting-output").innerHTML = html
         confetti()
